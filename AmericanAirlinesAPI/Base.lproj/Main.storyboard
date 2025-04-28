@@ -1,24 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AmericanAirlinesAPI" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gyf-ly-kgE">
+                                <rect key="frame" x="0.0" y="193" width="393" height="659"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" rowHeight="100" id="mMm-Oe-bwn" customClass="APITableCell" customModule="AmericanAirlinesAPI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mMm-Oe-bwn" id="P6I-7u-uiZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="result " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UOr-br-UAZ">
+                                                    <rect key="frame" x="10" y="5" width="373" height="64"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="link.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DfM-xP-UiF">
+                                                    <rect key="frame" x="10" y="74" width="373" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="ZB6-ZP-Eie"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" name="AccentColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="DfM-xP-UiF" secondAttribute="bottom" constant="5" id="4dO-l3-NQv"/>
+                                                <constraint firstItem="UOr-br-UAZ" firstAttribute="leading" secondItem="P6I-7u-uiZ" secondAttribute="leading" constant="10" id="Nh3-52-t4B"/>
+                                                <constraint firstItem="DfM-xP-UiF" firstAttribute="leading" secondItem="P6I-7u-uiZ" secondAttribute="leading" constant="10" id="abH-IU-Gm0"/>
+                                                <constraint firstItem="DfM-xP-UiF" firstAttribute="top" secondItem="UOr-br-UAZ" secondAttribute="bottom" constant="5" id="dV8-aR-PVH"/>
+                                                <constraint firstAttribute="trailing" secondItem="UOr-br-UAZ" secondAttribute="trailing" constant="10" id="s8v-Yk-Q3u"/>
+                                                <constraint firstItem="UOr-br-UAZ" firstAttribute="top" secondItem="P6I-7u-uiZ" secondAttribute="top" constant="5" id="szz-wT-BpM"/>
+                                                <constraint firstItem="DfM-xP-UiF" firstAttribute="top" secondItem="UOr-br-UAZ" secondAttribute="bottom" constant="5" id="uyW-QR-giv"/>
+                                                <constraint firstAttribute="trailing" secondItem="DfM-xP-UiF" secondAttribute="trailing" constant="10" id="zgf-6O-XJd"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellLinkLabel" destination="DfM-xP-UiF" id="ZF0-gA-y2T"/>
+                                            <outlet property="cellResultLabel" destination="UOr-br-UAZ" id="3VS-jO-ZPK"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4v-EZ-71O">
+                                <rect key="frame" x="293" y="123" width="90" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="CED-pC-OMf"/>
+                                    <constraint firstAttribute="height" constant="35" id="Gao-gy-LMV"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Search"/>
+                                <connections>
+                                    <action selector="searchButtonPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pcr-b3-uQz"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C02-Z7-BQm">
+                                <rect key="frame" x="10" y="123" width="273" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="H0Z-0P-MY6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="gyf-ly-kgE" secondAttribute="bottom" id="AGe-Sz-dN2"/>
+                            <constraint firstItem="C02-Z7-BQm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="DYO-VR-a9Q"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gyf-ly-kgE" secondAttribute="trailing" id="ITk-JM-IWP"/>
+                            <constraint firstItem="J4v-EZ-71O" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="Mkp-ab-ZXI"/>
+                            <constraint firstItem="gyf-ly-kgE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="UrY-5n-zBW"/>
+                            <constraint firstItem="C02-Z7-BQm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="Uth-hu-I2p"/>
+                            <constraint firstItem="J4v-EZ-71O" firstAttribute="leading" secondItem="C02-Z7-BQm" secondAttribute="trailing" constant="10" id="WdO-BA-E1P"/>
+                            <constraint firstItem="gyf-ly-kgE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="75" id="mvz-xW-FFK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="J4v-EZ-71O" secondAttribute="trailing" constant="10" id="pfw-VS-XtH"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="APITable" destination="gyf-ly-kgE" id="gB5-Of-ipv"/>
+                        <outlet property="searchTextField" destination="C02-Z7-BQm" id="CO5-QF-lV1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="43.511450381679388" y="3.5211267605633805"/>
         </scene>
     </scenes>
+    <resources>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
