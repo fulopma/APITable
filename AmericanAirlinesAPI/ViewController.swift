@@ -18,6 +18,8 @@ struct RelatedTopic: Decodable {
     let Topics: [RelatedTopic]?
 }
 
+// FirstUrl and Text or Name and Topics
+
 class ViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var APITable: UITableView!
     @IBOutlet weak var searchTextField: UITextField!
@@ -30,7 +32,9 @@ class ViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        // called delegation pattern
         APITable.dataSource = self
+        APITable.delegate = self
         userInputSearchLabel.text = ""
         searchTextField.placeholder = "Search on Bing–I mean–Duckduckgo"
     }
@@ -75,7 +79,7 @@ class ViewController: UIViewController, UITableViewDataSource {
             let (data, _) = try await URLSession.shared.data(
                 from: url ?? URL(fileURLWithPath: "")
             )
-            var results: Result = try JSONDecoder().decode(Result.self, from: data)
+            let results: Result = try JSONDecoder().decode(Result.self, from: data)
             outputArray.removeAll(keepingCapacity: true)
             for result in results.RelatedTopics {
                 if let _ = result.FirstURL {
@@ -96,4 +100,23 @@ class ViewController: UIViewController, UITableViewDataSource {
 
     }
 
+}
+
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+         //performSegue(withIdentifier: "showResult", sender: nil)
+//        
+//        // manual way to do segue
+//        let sb = UIStoryboard(name: "Main", bundle: nil)
+//        guard let vc = sb.instantiateViewController(withIdentifier: "EntryViewController")
+//                as? EntryViewController else{
+//            return
+//        }
+//        
+//        vc.name = "Hello World"
+//        self.present(vc, animated: true)
+//        
+       
+        
+    }
 }

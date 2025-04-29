@@ -21,21 +21,21 @@
                                 <rect key="frame" x="0.0" y="188" width="393" height="664"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" rowHeight="100" id="mMm-Oe-bwn" customClass="APITableCell" customModule="AmericanAirlinesAPI" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="searchCell" rowHeight="100" id="mMm-Oe-bwn" customClass="APITableCell" customModule="AmericanAirlinesAPI" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mMm-Oe-bwn" id="P6I-7u-uiZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="result " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UOr-br-UAZ">
-                                                    <rect key="frame" x="10" y="5" width="373" height="64"/>
+                                                    <rect key="frame" x="10" y="5" width="342.66666666666669" height="64"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="link.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DfM-xP-UiF">
-                                                    <rect key="frame" x="10" y="74" width="373" height="21"/>
+                                                    <rect key="frame" x="10" y="74" width="342.66666666666669" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="ZB6-ZP-Eie"/>
                                                     </constraints>
@@ -110,11 +110,43 @@
                         <outlet property="APITable" destination="gyf-ly-kgE" id="gB5-Of-ipv"/>
                         <outlet property="searchTextField" destination="C02-Z7-BQm" id="CO5-QF-lV1"/>
                         <outlet property="userInputSearchLabel" destination="Udt-42-ms5" id="qWP-zS-1F8"/>
+                        <segue destination="gqC-ZI-UVj" kind="show" identifier="showResult" id="dd6-cw-IAu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="43.511450381679388" y="3.5211267605633805"/>
+        </scene>
+        <!--Entry View Controller-->
+        <scene sceneID="XEa-sX-eMf">
+            <objects>
+                <viewController storyboardIdentifier="EntryViewController" id="gqC-ZI-UVj" customClass="EntryViewController" customModule="AmericanAirlinesAPI" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3mS-yt-zGB">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5NW-US-zF3">
+                                <rect key="frame" x="150.66666666666666" y="368.33333333333331" width="91.666666666666657" height="46.666666666666686"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="39"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="4eh-HP-6Ed"/>
+                        <color key="backgroundColor" systemColor="systemPinkColor"/>
+                        <constraints>
+                            <constraint firstItem="5NW-US-zF3" firstAttribute="centerX" secondItem="3mS-yt-zGB" secondAttribute="centerX" id="igu-KD-5xl"/>
+                            <constraint firstItem="5NW-US-zF3" firstAttribute="centerY" secondItem="3mS-yt-zGB" secondAttribute="centerY" id="yc4-BT-AzN"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="hP8-ay-jgr"/>
+                    <connections>
+                        <outlet property="nameLabel" destination="5NW-US-zF3" id="3UJ-Y0-2E7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V0x-aR-kH3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="866" y="4"/>
         </scene>
     </scenes>
     <resources>
@@ -123,6 +155,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
