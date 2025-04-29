@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gyf-ly-kgE">
-                                <rect key="frame" x="0.0" y="193" width="393" height="659"/>
+                                <rect key="frame" x="0.0" y="188" width="393" height="664"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" rowHeight="100" id="mMm-Oe-bwn" customClass="APITableCell" customModule="AmericanAirlinesAPI" customModuleProvider="target">
@@ -28,7 +28,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="result " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UOr-br-UAZ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="result " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UOr-br-UAZ">
                                                     <rect key="frame" x="10" y="5" width="373" height="64"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -62,10 +62,18 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4v-EZ-71O">
-                                <rect key="frame" x="293" y="123" width="90" height="35"/>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="C02-Z7-BQm">
+                                <rect key="frame" x="10" y="123" width="285.66666666666669" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="90" id="CED-pC-OMf"/>
+                                    <constraint firstAttribute="height" constant="35" id="H0Z-0P-MY6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" smartDashesType="no" smartQuotesType="no"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4v-EZ-71O">
+                                <rect key="frame" x="305.66666666666669" y="123" width="77.333333333333314" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="CED-pC-OMf"/>
                                     <constraint firstAttribute="height" constant="35" id="Gao-gy-LMV"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
@@ -74,32 +82,34 @@
                                     <action selector="searchButtonPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pcr-b3-uQz"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C02-Z7-BQm">
-                                <rect key="frame" x="10" y="123" width="273" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="H0Z-0P-MY6"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Udt-42-ms5">
+                                <rect key="frame" x="10" y="163" width="373" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="gyf-ly-kgE" secondAttribute="bottom" id="AGe-Sz-dN2"/>
                             <constraint firstItem="C02-Z7-BQm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="DYO-VR-a9Q"/>
+                            <constraint firstItem="Udt-42-ms5" firstAttribute="top" secondItem="C02-Z7-BQm" secondAttribute="bottom" constant="5" id="EjT-tT-K0M"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gyf-ly-kgE" secondAttribute="trailing" id="ITk-JM-IWP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Udt-42-ms5" secondAttribute="trailing" constant="10" id="KWv-I7-UKk"/>
                             <constraint firstItem="J4v-EZ-71O" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="Mkp-ab-ZXI"/>
+                            <constraint firstItem="Udt-42-ms5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="TAy-i6-bkP"/>
                             <constraint firstItem="gyf-ly-kgE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="UrY-5n-zBW"/>
                             <constraint firstItem="C02-Z7-BQm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="Uth-hu-I2p"/>
                             <constraint firstItem="J4v-EZ-71O" firstAttribute="leading" secondItem="C02-Z7-BQm" secondAttribute="trailing" constant="10" id="WdO-BA-E1P"/>
-                            <constraint firstItem="gyf-ly-kgE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="75" id="mvz-xW-FFK"/>
+                            <constraint firstItem="gyf-ly-kgE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="70" id="mvz-xW-FFK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="J4v-EZ-71O" secondAttribute="trailing" constant="10" id="pfw-VS-XtH"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="APITable" destination="gyf-ly-kgE" id="gB5-Of-ipv"/>
                         <outlet property="searchTextField" destination="C02-Z7-BQm" id="CO5-QF-lV1"/>
+                        <outlet property="userInputSearchLabel" destination="Udt-42-ms5" id="qWP-zS-1F8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
