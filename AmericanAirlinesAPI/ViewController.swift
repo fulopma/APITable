@@ -91,6 +91,14 @@ class ViewController: UIViewController, UITableViewDataSource {
                 cell.linkLabel.text = outputArray.results[indexPath.row].firstURL
                 cell.descriptionLabel.text = outputArray.results[indexPath.row].text
             }
+            else if indexPath.section == 1 {
+                
+                var relatedText = outputArray.relatedTopics[indexPath.row].result ?? ""
+                relatedText = relatedText.replacing(/<a[^>]+>/, with: "")
+                relatedText = relatedText.replacing(/<.*/, with: "")
+                cell.descriptionLabel.text = relatedText
+                cell.linkLabel.text = outputArray.relatedTopics[indexPath.row].firstURL ?? "No url for \(outputArray.relatedTopics[indexPath.row].name ?? "No name")"
+            }
             
         return cell
     }
@@ -118,7 +126,6 @@ class ViewController: UIViewController, UITableViewDataSource {
                 self.outputArray = try jsonDecoder.decode(Output.self, from: data)
                 // This line below culls if related topics includes groups of links
               //  self.outputArray.relatedTopics = self.outputArray.relatedTopics.filter {$0.topics != nil}
-                print(self.outputArray.results)
             }
             catch {
                 print("Error parsing JSON: \(error)")
