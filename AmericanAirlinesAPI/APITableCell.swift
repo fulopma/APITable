@@ -9,8 +9,8 @@ import UIKit
 
 class APITableCell: UITableViewCell {
 
-    @IBOutlet weak var cellResultLabel: UILabel!
-    @IBOutlet weak var cellLinkLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var linkLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
