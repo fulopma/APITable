@@ -157,6 +157,9 @@
                             <constraint firstItem="Oke-Cx-j66" firstAttribute="leading" secondItem="Rxv-RF-G71" secondAttribute="leading" id="rCb-LI-zlv"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="additionalDetailsViewTable" destination="Oke-Cx-j66" id="dkQ-Vf-50Q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aOz-a9-7mF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

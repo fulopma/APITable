@@ -50,9 +50,9 @@ class SearchViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var APITable: UITableView!
     @IBOutlet weak var searchBarAPI: UISearchBar!
     @IBOutlet weak var userInputSearchLabel: UILabel!
-
-    var outputArray: Output = Output(relatedTopics: [], results: [])
-    var offset = 0
+    
+    private var outputArray: Output = Output(relatedTopics: [], results: [])
+    private var offset = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,7 +133,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
         case 0:
             cell.linkLabel.text = outputArray.results[indexPath.row].firstURL
             cell.descriptionLabel.text = outputArray.results[indexPath.row].text
-
+            break
         case 1:
             var relatedText =
                 outputArray.relatedTopics[indexPath.row].result ?? ""
@@ -142,7 +142,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
             cell.descriptionLabel.text = relatedText
             cell.linkLabel.text =
                 outputArray.relatedTopics[indexPath.row].firstURL
-
+            break
         default:
             let correctIndex = indexPath.row + offset
             guard let redirectText = outputArray.relatedTopics[correctIndex].name else {
@@ -218,7 +218,22 @@ extension SearchViewController: UITableViewDelegate {
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
     ) {
-        
+        switch indexPath.section{
+        case 0:
+            break
+        case 1:
+            break
+        default:
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            guard let vc = sb.instantiateViewController(withIdentifier: "SearchDetailsViewController")
+                    as? SearchDetailsViewController else{
+                return
+            }
+            vc.additionalDetails = Array( outputArray.relatedTopics[offset..<outputArray.relatedTopics.count])
+            self.navigationController?.pushViewController(vc, animated: true)
+            print("default")
+            
+        }
     }
 
 }
