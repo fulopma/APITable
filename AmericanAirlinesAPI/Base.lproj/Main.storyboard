@@ -114,7 +114,7 @@
                                 <rect key="frame" x="0.0" y="118" width="393" height="734"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="bXk-uo-TZq" customClass="APITableCell" customModule="AmericanAirlinesAPI" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="bXk-uo-TZq" customClass="SearchDetailsTableViewCell" customModule="AmericanAirlinesAPI" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bXk-uo-TZq" id="VPI-NI-ogn">
@@ -144,6 +144,10 @@
                                                 <constraint firstItem="NlU-MW-NFU" firstAttribute="top" secondItem="VPI-NI-ogn" secondAttribute="topMargin" constant="5" id="wHz-v9-7FM"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="descriptionLabel" destination="NlU-MW-NFU" id="PyX-Ou-zUn"/>
+                                            <outlet property="linkLabel" destination="evm-ec-wng" id="229-tK-pU9"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

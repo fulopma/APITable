@@ -229,7 +229,8 @@ extension SearchViewController: UITableViewDelegate {
                     as? SearchDetailsViewController else{
                 return
             }
-            vc.additionalDetails = Array( outputArray.relatedTopics[offset..<outputArray.relatedTopics.count])
+            vc.additionalDetails =  outputArray.relatedTopics[offset + indexPath.row].topics ?? []
+           // print(vc.additionalDetails)
             self.navigationController?.pushViewController(vc, animated: true)
             print("default")
             
