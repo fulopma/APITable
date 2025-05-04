@@ -65,6 +65,9 @@ class SearchViewController: UIViewController, UITableViewDataSource {
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
+        if outputArray.relatedTopics.isEmpty && outputArray.results.isEmpty {
+            return 0
+        }
         return 3
     }
     
@@ -150,9 +153,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
                 abort()
             }
             cell.descriptionLabel.text = redirectText
-            cell.linkLabel.text = nil
-            cell.linkLabel.font = UIFont.systemFont(ofSize: 0)
-            cell.linkLabel.constraints.forEach { $0.isActive = false }
+            cell.linkLabel.text = ""
         }
         print(cell.descriptionLabel.text ?? "No text")
         return cell
@@ -218,7 +219,7 @@ extension SearchViewController: UITableViewDelegate {
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
     ) {
-        switch indexPath.section{
+        switch indexPath.section {
         case 0:
             break
         case 1:
@@ -230,10 +231,7 @@ extension SearchViewController: UITableViewDelegate {
                 return
             }
             vc.additionalDetails =  outputArray.relatedTopics[offset + indexPath.row].topics ?? []
-           // print(vc.additionalDetails)
             self.navigationController?.pushViewController(vc, animated: true)
-            print("default")
-            
         }
     }
 
