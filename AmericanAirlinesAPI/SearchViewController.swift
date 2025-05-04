@@ -88,7 +88,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
                 }
             }
             offset = linkedRelatedTopicsCount
-            print("There are \(offset) normal topics that have URLs.")
+            //print("There are \(offset) normal topics that have URLs.")
             return linkedRelatedTopicsCount
         default:
             var moreTopics = 0
@@ -98,7 +98,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
                 }
                 moreTopics += 1
             }
-            print("There are \(moreTopics) normal topics that don't have URLs.")
+            //print("There are \(moreTopics) normal topics that don't have URLs.")
             return moreTopics
         }
 
@@ -114,7 +114,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
         case 1:
             return "Related Topics"
         default:
-            return "Additional Topicss"
+            return "Additional Topics"
         }
     }
 
@@ -155,7 +155,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
             cell.descriptionLabel.text = redirectText
             cell.linkLabel.text = ""
         }
-        print(cell.descriptionLabel.text ?? "No text")
+       // print(cell.descriptionLabel.text ?? "No text")
         return cell
     }
 
@@ -221,8 +221,18 @@ extension SearchViewController: UITableViewDelegate {
     ) {
         switch indexPath.section {
         case 0:
+            guard let url = URL(string: outputArray.results[indexPath.row].firstURL ?? "") else {
+                print("Failed to open \(outputArray.results[indexPath.row].firstURL ?? "no link")")
+                break
+            }
+            UIApplication.shared.open(url)
             break
         case 1:
+            guard let url = URL(string: outputArray.relatedTopics[indexPath.row].firstURL ?? "") else {
+                print("Failed to open \(outputArray.relatedTopics[indexPath.row].firstURL ?? "no link")")
+                break
+            }
+            UIApplication.shared.open(url)
             break
         default:
             let sb = UIStoryboard(name: "Main", bundle: nil)
