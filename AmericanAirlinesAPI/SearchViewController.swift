@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-// I would fire the backend intern who designed this output
 struct SearchResult: Decodable {
     let firstURL: String?
     let result: String?
