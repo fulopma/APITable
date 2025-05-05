@@ -93,8 +93,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="WEz-nH-5rv"/>
                     <connections>
-                        <outlet property="APITable" destination="gyf-ly-kgE" id="gB5-Of-ipv"/>
-                        <outlet property="searchBarAPI" destination="jRf-sR-5Z0" id="Rq7-E8-z2y"/>
+                        <outlet property="apiSearchBar" destination="jRf-sR-5Z0" id="Rq7-E8-z2y"/>
+                        <outlet property="apiTable" destination="gyf-ly-kgE" id="gB5-Of-ipv"/>
                         <outlet property="userInputSearchLabel" destination="Udt-42-ms5" id="qWP-zS-1F8"/>
                     </connections>
                 </viewController>
@@ -115,10 +115,10 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" id="bXk-uo-TZq" customClass="SearchDetailsTableViewCell" customModule="AmericanAirlinesAPI" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="393" height="72.666664123535156"/>
+                                        <rect key="frame" x="0.0" y="50" width="393" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bXk-uo-TZq" id="VPI-NI-ogn">
-                                            <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="72.666664123535156"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="result " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NlU-MW-NFU">
@@ -128,7 +128,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="link.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="evm-ec-wng">
-                                                    <rect key="frame" x="10" y="46.333333333333336" width="342.66666666666669" height="21.333333333333336"/>
+                                                    <rect key="frame" x="10" y="46.333333333333336" width="342.66666666666669" height="20.666666666666664"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" name="AccentColor"/>
                                                     <nil key="highlightedColor"/>

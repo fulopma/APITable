@@ -46,8 +46,8 @@ struct Output: Decodable {
 
 class SearchViewController: UIViewController, UITableViewDataSource {
 
-    @IBOutlet weak var APITable: UITableView!
-    @IBOutlet weak var searchBarAPI: UISearchBar!
+    @IBOutlet weak var apiTable: UITableView!
+    @IBOutlet weak var apiSearchBar: UISearchBar!
     @IBOutlet weak var userInputSearchLabel: UILabel!
     
     private var outputArray: Output = Output(relatedTopics: [], results: [])
@@ -57,10 +57,10 @@ class SearchViewController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         // called delegation pattern
-        APITable.dataSource = self
-        APITable.delegate = self
+        apiTable.dataSource = self
+        apiTable.delegate = self
         userInputSearchLabel.text = ""
-        searchBarAPI.placeholder = "Search on 🦆🦆▶️"
+        apiSearchBar.placeholder = "Search on 🦆🦆▶️"
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -87,7 +87,6 @@ class SearchViewController: UIViewController, UITableViewDataSource {
                 }
             }
             offset = linkedRelatedTopicsCount
-            //print("There are \(offset) normal topics that have URLs.")
             return linkedRelatedTopicsCount
         default:
             var moreTopics = 0
@@ -97,7 +96,6 @@ class SearchViewController: UIViewController, UITableViewDataSource {
                 }
                 moreTopics += 1
             }
-            //print("There are \(moreTopics) normal topics that don't have URLs.")
             return moreTopics
         }
 
@@ -154,50 +152,25 @@ class SearchViewController: UIViewController, UITableViewDataSource {
             cell.descriptionLabel.text = redirectText
             cell.linkLabel.text = ""
         }
-       // print(cell.descriptionLabel.text ?? "No text")
         return cell
     }
 
-    func performAPIQuery(searchTerm: String) {
+    func performApiQuery(searchTerm: String) {
         if searchTerm.isEmpty {
             return
         }
-        let searchQuery = searchTerm.replacing(/\s+/, with: "+")
-        guard
-            let url = URL(
-                string:
-                    "https://api.duckduckgo.com/?q=\(searchQuery)&format=json"
-            )
-        else {
-            return
-        }
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "GET"
-        URLSession.shared.dataTask(with: urlRequest) {
-            _data,
-            response,
-            error in
-            guard let data = _data else {
-                print("No data returned")
+        let endpoint = "https://api.duckduckgo.com/?q=" + searchTerm.replacing(/\s+/, with: "+") + "&format=json"
+        ServiceManager().callService(endpoint: endpoint, modelName: Output.self) {output, error in
+            if let error = error {
+                print("Error: \(error)")
                 abort()
             }
-            let jsonDecoder = JSONDecoder()
-            do {
-                self.outputArray = try jsonDecoder.decode(
-                    Output.self,
-                    from: data
-                )
-                // This line below culls if related topics includes groups of links
-                //  self.outputArray.relatedTopics = self.outputArray.relatedTopics.filter {$0.topics != nil}
-            } catch {
-                print("Error parsing JSON: \(error)")
-                abort()
-            }
+            self.outputArray = output ?? Output(relatedTopics: [], results: [])
             DispatchQueue.main.async {
-                self.APITable.reloadData()
+                self.apiTable.reloadData()
                 self.userInputSearchLabel.text = "Results for \"\(searchTerm)\""
             }
-        }.resume()
+        }
     }
 
 }
@@ -205,10 +178,10 @@ class SearchViewController: UIViewController, UITableViewDataSource {
 extension SearchViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let input = searchBarAPI.text else {
+        guard let input = apiSearchBar.text else {
             return
         }
-        performAPIQuery(searchTerm: input)
+        performApiQuery(searchTerm: input)
     }
 
 }
