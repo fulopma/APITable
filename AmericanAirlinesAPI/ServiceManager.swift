@@ -14,24 +14,24 @@ enum ServiceError: Error {
 }
 
 class ServiceManager {
-    func callService<T: Decodable>(endpoint: String, modelName: T.Type, completion: @escaping (T?, ServiceError?) -> Void) {
+    func callService<T: Decodable>(endpoint: String, modelName: T.Type, completion: @escaping (Result<T, ServiceError>) -> Void) {
         guard let url = URL(string: endpoint) else {
-            completion(nil, ServiceError.invalidURL)
+            completion(.failure(.invalidURL))
             return
         }
         let urlRequest = URLRequest(url: url)
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             guard let data = data else {
-                completion(nil, ServiceError.fetchFailed)
+                completion(.failure(.fetchFailed))
                 return
             }
             do {
                 let searchResponse = try JSONDecoder().decode(
                     modelName.self, from: data)
 
-                completion(searchResponse, nil)
+                completion(.success(searchResponse))
             } catch {
-                completion(nil, ServiceError.decodingFailed)
+                completion(.failure(.decodingFailed))
             }
         }.resume()
     }

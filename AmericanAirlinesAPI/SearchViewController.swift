@@ -49,7 +49,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var apiTable: UITableView!
     @IBOutlet weak var apiSearchBar: UISearchBar!
     @IBOutlet weak var userInputSearchLabel: UILabel!
-    
+
     private var searchOutput: Output = Output(relatedTopics: [], results: [])
     private var offset = 0
 
@@ -69,20 +69,20 @@ class SearchViewController: UIViewController, UITableViewDataSource {
         }
         return 3
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
-        -> Int {
-        
+        -> Int
+    {
+
         switch section {
         case 0:
             return searchOutput.results.count
         case 1:
             var linkedRelatedTopicsCount = 0
             for topic in searchOutput.relatedTopics {
-                if let _ = topic.firstURL {
+                if topic.firstURL != nil {
                     linkedRelatedTopicsCount += 1
-                }
-                else {
+                } else {
                     break
                 }
             }
@@ -91,7 +91,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
         default:
             var moreTopics = 0
             for topic in searchOutput.relatedTopics {
-                if let _ = topic.firstURL {
+                if topic.firstURL != nil {
                     continue
                 }
                 moreTopics += 1
@@ -116,7 +116,8 @@ class SearchViewController: UIViewController, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
-        -> UITableViewCell {
+        -> UITableViewCell
+    {
         guard
             let cell =
                 tableView.dequeueReusableCell(
@@ -127,13 +128,15 @@ class SearchViewController: UIViewController, UITableViewDataSource {
             print("Casting failed")
             abort()
         }
-        
+
         switch indexPath.section {
 
         case 0:
             cell.linkLabel.text = searchOutput.results[indexPath.row].firstURL
-            cell.descriptionLabel.text = searchOutput.results[indexPath.row].text
+            cell.descriptionLabel.text =
+                searchOutput.results[indexPath.row].text
             break
+            
         case 1:
             var relatedText =
                 searchOutput.relatedTopics[indexPath.row].result ?? ""
@@ -143,14 +146,18 @@ class SearchViewController: UIViewController, UITableViewDataSource {
             cell.linkLabel.text =
                 searchOutput.relatedTopics[indexPath.row].firstURL
             break
+            
         default:
             let correctIndex = indexPath.row + offset
-            guard let redirectText = searchOutput.relatedTopics[correctIndex].name else {
+            guard
+                let redirectText = searchOutput.relatedTopics[correctIndex].name
+            else {
                 print("You messed up somewhere")
                 abort()
             }
             cell.descriptionLabel.text = redirectText
             cell.linkLabel.text = ""
+            
         }
         return cell
     }
@@ -159,13 +166,17 @@ class SearchViewController: UIViewController, UITableViewDataSource {
         if searchTerm.isEmpty {
             return
         }
-        let endpoint = "https://api.duckduckgo.com/?q=" + searchTerm.replacing(/\s+/, with: "+") + "&format=json"
-        ServiceManager().callService(endpoint: endpoint, modelName: Output.self) {output, error in
-            if let error = error {
+        let endpoint =
+            "https://api.duckduckgo.com/?q="
+            + searchTerm.replacing(/\s+/, with: "+") + "&format=json"
+        ServiceManager().callService(endpoint: endpoint, modelName: Output.self)
+        { result in
+            do {
+                self.searchOutput = try result.get()
+            } catch {
                 print("Error: \(error)")
-                abort()
             }
-            self.searchOutput = output ?? Output(relatedTopics: [], results: [])
+
             DispatchQueue.main.async {
                 self.apiTable.reloadData()
                 self.userInputSearchLabel.text = "Results for \"\(searchTerm)\""
@@ -193,26 +204,44 @@ extension SearchViewController: UITableViewDelegate {
     ) {
         switch indexPath.section {
         case 0:
-            guard let url = URL(string: searchOutput.results[indexPath.row].firstURL ?? "") else {
-                print("Failed to open \(searchOutput.results[indexPath.row].firstURL ?? "no link")")
+            guard
+                let url = URL(
+                    string: searchOutput.results[indexPath.row].firstURL ?? ""
+                )
+            else {
+                print(
+                    "Failed to open \(searchOutput.results[indexPath.row].firstURL ?? "no link")"
+                )
                 break
             }
             UIApplication.shared.open(url)
             break
         case 1:
-            guard let url = URL(string: searchOutput.relatedTopics[indexPath.row].firstURL ?? "") else {
-                print("Failed to open \(searchOutput.relatedTopics[indexPath.row].firstURL ?? "no link")")
+            guard
+                let url = URL(
+                    string: searchOutput.relatedTopics[indexPath.row].firstURL
+                        ?? ""
+                )
+            else {
+                print(
+                    "Failed to open \(searchOutput.relatedTopics[indexPath.row].firstURL ?? "no link")"
+                )
                 break
             }
             UIApplication.shared.open(url)
             break
         default:
             let sb = UIStoryboard(name: "Main", bundle: nil)
-            guard let vc = sb.instantiateViewController(withIdentifier: "SearchDetailsViewController")
-                    as? SearchDetailsViewController else{
+            guard
+                let vc = sb.instantiateViewController(
+                    withIdentifier: "SearchDetailsViewController"
+                )
+                    as? SearchDetailsViewController
+            else {
                 return
             }
-            vc.additionalDetails =  searchOutput.relatedTopics[offset + indexPath.row].topics ?? []
+            vc.additionalDetails =
+                searchOutput.relatedTopics[offset + indexPath.row].topics ?? []
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
