@@ -21,20 +21,15 @@ class ServiceManager {
         }
         let urlRequest = URLRequest(url: url)
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-
             guard let data = data else {
                 completion(nil, ServiceError.fetchFailed)
                 return
             }
-
             do {
-
                 let searchResponse = try JSONDecoder().decode(
                     modelName.self, from: data)
 
                 completion(searchResponse, nil)
-                print(searchResponse)
-
             } catch {
                 completion(nil, ServiceError.decodingFailed)
             }
