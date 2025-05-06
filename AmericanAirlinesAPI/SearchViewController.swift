@@ -166,10 +166,10 @@ class SearchViewController: UIViewController, UITableViewDataSource {
         if searchTerm.isEmpty {
             return
         }
-        let endpoint =
-            "https://api.duckduckgo.com/?q="
-            + searchTerm.replacing(/\s+/, with: "+") + "&format=json"
-        ServiceManager().callService(endpoint: endpoint, modelName: Output.self)
+        //let endpoint =
+        //    "https://api.duckduckgo.com/?q="
+        //    + searchTerm.replacing(/\s+/, with: "+") + "&format=json"
+        ServiceManager().execute(request: SearchRequest.createRequest(text: searchTerm.replacing(/\s+/, with: "+")), modelName: Output.self)
         { result in
             do {
                 self.searchOutput = try result.get()
