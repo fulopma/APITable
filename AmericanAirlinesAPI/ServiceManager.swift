@@ -47,9 +47,25 @@ extension Request {
 protocol ServiceAPI {
     func callService<T: Decodable>(endpoint: String, modelName: T.Type, completion: @escaping (Result<T, ServiceError>) -> Void)
     func execute<T: Decodable>(request: Request, modelName: T.Type, completion: @escaping (Result<T, ServiceError>) -> Void)
+    func execute<T: Decodable>(request: Request, modelName: T.Type) async throws -> T
 }
 
 class ServiceManager: ServiceAPI{
+    func execute<T>(request: any Request, modelName: T.Type) async throws -> T where T : Decodable {
+        guard let urlRequest = request.createRequest() else {
+            throw ServiceError.invalidURL
+        }
+        
+        let (data, _) =  try await URLSession.shared.data(for: urlRequest)
+       
+        return try JSONDecoder().decode(
+             modelName.self, from: data)
+    }
+    
+    
+
+    
+    
     func execute<T: Decodable>(request: Request, modelName: T.Type, completion: @escaping (Result<T, ServiceError>) -> Void) {
         guard let urlRequest = request.createRequest() else {
             return completion(.failure(.invalidURL))

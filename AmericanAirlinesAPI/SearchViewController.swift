@@ -49,7 +49,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var apiTable: UITableView!
     @IBOutlet weak var apiSearchBar: UISearchBar!
     @IBOutlet weak var userInputSearchLabel: UILabel!
-    var searchApi: ServiceAPI?
+    private var searchApi: ServiceAPI?
     private var searchOutput: Output = Output(relatedTopics: [], results: [])
     private var offset = 0
 
@@ -61,6 +61,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
         apiTable.delegate = self
         userInputSearchLabel.text = ""
         apiSearchBar.placeholder = "Search on 🦆🦆▶️"
+        searchApi = ServiceManager()
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -169,19 +170,38 @@ class SearchViewController: UIViewController, UITableViewDataSource {
         //let endpoint =
         //    "https://api.duckduckgo.com/?q="
         //    + searchTerm.replacing(/\s+/, with: "+") + "&format=json"
-        searchApi?.execute(request: SearchRequest.createRequest(text: searchTerm.replacing(/\s+/, with: "+")), modelName: Output.self)
-        { result in
+//        searchApi?.execute(request: SearchRequest.createRequest(text: searchTerm.replacing(/\s+/, with: "+")), modelName: Output.self)
+//        { result in
+//            do {
+//                self.searchOutput = try result.get()
+//            } catch {
+//                print("Error: \(error)")
+//            }
+//
+//            DispatchQueue.main.async {
+//                self.apiTable.reloadData()
+//                self.userInputSearchLabel.text = "Results for \"\(searchTerm)\""
+//            }
+//        }
+        // prepare query
+        let query = searchTerm.replacing(/\s+/, with: "+")
+        Task {
             do {
-                self.searchOutput = try result.get()
-            } catch {
-                print("Error: \(error)")
+                guard let output = try await searchApi?.execute(request: SearchRequest.createRequest(text: query), modelName: Output.self) else {
+                    print("Nil ouput returned")
+                    abort()
+                }
+                searchOutput = output
+                DispatchQueue.main.async {
+                    self.apiTable.reloadData()
+                }
             }
-
-            DispatchQueue.main.async {
-                self.apiTable.reloadData()
-                self.userInputSearchLabel.text = "Results for \"\(searchTerm)\""
+            catch {
+                print("Error: \(error)")
+                abort()
             }
         }
+        
     }
 
 }
