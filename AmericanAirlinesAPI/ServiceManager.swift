@@ -27,7 +27,6 @@ protocol Request {
     var params: [String: String]? {get set}
     var header: [String: String]? {get set}
 }
-
 extension Request {
     func createRequest() -> URLRequest? {
         var urlComponents = URLComponents(string: baseURL + path)
@@ -72,6 +71,7 @@ class ServiceManager: ServiceAPI{
         }.resume()
         
     }
+    
     func callService<T: Decodable>(endpoint: String, modelName: T.Type, completion: @escaping (Result<T, ServiceError>) -> Void) {
         guard let url = URL(string: endpoint) else {
             completion(.failure(.invalidURL))

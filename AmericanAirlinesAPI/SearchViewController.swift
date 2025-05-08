@@ -49,7 +49,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var apiTable: UITableView!
     @IBOutlet weak var apiSearchBar: UISearchBar!
     @IBOutlet weak var userInputSearchLabel: UILabel!
-
+    var searchApi: ServiceAPI?
     private var searchOutput: Output = Output(relatedTopics: [], results: [])
     private var offset = 0
 
@@ -169,7 +169,7 @@ class SearchViewController: UIViewController, UITableViewDataSource {
         //let endpoint =
         //    "https://api.duckduckgo.com/?q="
         //    + searchTerm.replacing(/\s+/, with: "+") + "&format=json"
-        ServiceManager().execute(request: SearchRequest.createRequest(text: searchTerm.replacing(/\s+/, with: "+")), modelName: Output.self)
+        searchApi?.execute(request: SearchRequest.createRequest(text: searchTerm.replacing(/\s+/, with: "+")), modelName: Output.self)
         { result in
             do {
                 self.searchOutput = try result.get()
