@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SafariServices
 
 
 // FirstUrl and Text or Name and Topics
@@ -25,7 +26,7 @@ protocol SearchViewDelegate: AnyObject {
     func didSelectRow(at indexPath: IndexPath)
 }
 
-class SearchViewController: UIViewController, UITableViewDataSource {
+class SearchViewController: UIViewController, UITableViewDataSource, SFSafariViewControllerDelegate {
 
     @IBOutlet weak var apiTable: UITableView!
     @IBOutlet weak var apiSearchBar: UISearchBar!
@@ -97,58 +98,30 @@ extension SearchViewController: UISearchBarDelegate {
         Task{
             await searchViewModel?.querySearch(userInput: input)
             apiTable.reloadData()
+            userInputSearchLabel.text = "\"\(input)\""
         }
+        
     }
 
 }
 
 extension SearchViewController: SearchViewDelegate {
     func didSelectRow(at indexPath: IndexPath) {
-        let output = searchViewModel?.getSearchOutput()
-        switch indexPath.section {
-           case 0:
-               guard
-                   let url = URL(
-                    string: output?.results[indexPath.row].firstURL ?? ""
-                   )
-               else {
-                   print(
-                    "Failed to open \(output?.results[indexPath.row].firstURL ?? "no link")"
-                   )
-                   break
-               }
-               UIApplication.shared.open(url)
-               break
-           case 1:
-               guard
-                   let url = URL(
-                    string: output?.relatedTopics[indexPath.row].firstURL
-                           ?? ""
-                   )
-               else {
-                   print(
-                    "Failed to open \(output?.relatedTopics[indexPath.row].firstURL ?? "no link")"
-                   )
-                   break
-               }
-               UIApplication.shared.open(url)
-               break
-           default:
-               let sb = UIStoryboard(name: "Main", bundle: nil)
-               guard
-                   let vc = sb.instantiateViewController(
-                       withIdentifier: "SearchDetailsViewController"
-                   )
-                       as? SearchDetailsViewController
-               else {
-                   return
-               }
-               vc.additionalDetails =
-            output?.relatedTopics.filter(({
-                $0.firstURL == nil
-            }))[indexPath.row].topics ?? []
-               self.navigationController?.pushViewController(vc, animated: true)
-           }
+        let result = searchViewModel?.getSearchResult(at: indexPath)
+        if let url = URL(string: result?.firstURL ?? "") {
+            let safariViewController = SFSafariViewController(url: url)
+            present(safariViewController, animated: true, completion: nil)
+            safariViewController.delegate = self
+        }
+        else {
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            guard let vc = sb.instantiateViewController(withIdentifier: "SearchDetailsViewController") as? SearchDetailsViewController else {
+                print("Could not instantitate view controller")
+                abort()
+            }
+            vc.additionalDetails = result?.topics ?? []
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     
@@ -159,8 +132,7 @@ extension SearchViewController: UITableViewDelegate {
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
     ) {
-        // find indexPath.section
-//
+        didSelectRow(at: indexPath)
     }
 
 }

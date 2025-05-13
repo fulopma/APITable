@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gyf-ly-kgE">
-                                <rect key="frame" x="0.0" y="243.66666666666669" width="393" height="608.33333333333326"/>
+                                <rect key="frame" x="0.0" y="233.66666666666669" width="393" height="618.33333333333326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="searchCell" rowHeight="100" id="mMm-Oe-bwn" customClass="APITableCell" customModule="AmericanAirlinesAPI" customModuleProvider="target">
@@ -63,7 +63,7 @@
                                 </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Udt-42-ms5">
-                                <rect key="frame" x="10" y="223" width="378" height="15.666666666666657"/>
+                                <rect key="frame" x="10" y="218" width="378" height="15.666666666666657"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -80,12 +80,12 @@
                             <constraint firstItem="jRf-sR-5Z0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="9gO-nd-Ykp"/>
                             <constraint firstAttribute="bottom" secondItem="gyf-ly-kgE" secondAttribute="bottom" id="AGe-Sz-dN2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gyf-ly-kgE" secondAttribute="trailing" id="ITk-JM-IWP"/>
-                            <constraint firstItem="Udt-42-ms5" firstAttribute="top" secondItem="jRf-sR-5Z0" secondAttribute="bottom" constant="5" id="QGg-V7-ytt"/>
+                            <constraint firstItem="Udt-42-ms5" firstAttribute="top" secondItem="jRf-sR-5Z0" secondAttribute="bottom" id="QGg-V7-ytt"/>
                             <constraint firstItem="gyf-ly-kgE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="UrY-5n-zBW"/>
                             <constraint firstItem="jRf-sR-5Z0" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="cbt-tF-aBC"/>
                             <constraint firstItem="jRf-sR-5Z0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cvf-nC-xJT"/>
                             <constraint firstItem="Udt-42-ms5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="fQl-kV-lOQ"/>
-                            <constraint firstItem="gyf-ly-kgE" firstAttribute="top" secondItem="Udt-42-ms5" secondAttribute="bottom" constant="5" id="x0o-0t-nCb"/>
+                            <constraint firstItem="gyf-ly-kgE" firstAttribute="top" secondItem="Udt-42-ms5" secondAttribute="bottom" id="x0o-0t-nCb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WEz-nH-5rv"/>

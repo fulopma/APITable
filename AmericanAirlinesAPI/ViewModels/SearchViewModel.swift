@@ -33,7 +33,12 @@ struct Output: Decodable {
 
 class SearchViewModel {
     private var searchApi: ServiceAPI = ServiceManager()
-    private var searchOutput: Output = Output(relatedTopics: [], results: [])
+    private var results: [SearchResult] = []
+    private var relatedTopics: [SearchResult] = []
+    private var additionalTopics: [SearchResult] = []
+    private var areThereResults = false
+    private var areThereRelatedTopics = false
+    private var areThereAdditionalTopics = false
     private var offset = 0
     weak var delegate : SearchViewDelegate?
     private var count = 0
@@ -41,53 +46,67 @@ class SearchViewModel {
     func getLinkText(section: Int, row: Int) -> String {
         switch section {
         case 0:
-            if !searchOutput.results.isEmpty {
-                return searchOutput.results[row].firstURL ?? "What?"
+            if areThereResults {
+                return results[row].firstURL ?? "No URL available"
             }
-            else{
-                return searchOutput.relatedTopics[row].firstURL ?? "What?"
+            else {
+                return relatedTopics[row].firstURL ?? "No URL available"
             }
         case 1:
-            if !searchOutput.relatedTopics.filter(({
-                $0.firstURL != nil
-            })).isEmpty {
-                return searchOutput.relatedTopics[row].firstURL ?? "What?"
+            if areThereResults {
+                return relatedTopics[row].firstURL ?? "No URL"
+            }
+            if areThereAdditionalTopics {
+                return ""
+            }
+            else {
+                return "You messed up"
             }
         default:
-            return ""
+            return "You Messed Up"
         }
-        return ""
     }
     
     func getDescriptionLabel(section: Int, row: Int) -> String {
         switch section {
         case 0:
-            if !searchOutput.results.isEmpty {
-                return searchOutput.results[row].text ?? "What?"
+            if areThereResults {
+                return results[row].text ?? "No description available"
             }
             else {
-                var text = searchOutput.relatedTopics[row].text ?? "What?"
-                text = text.replacing(/<a[^>]+>/, with: "")
-                text = text.replacing(/<.*/, with: "")
-                return text
+                return relatedTopics[row].result?.replacing(/<a[^>]+>/, with: "").replacing(/<.+/, with: "") ?? "No result"
             }
-           
         case 1:
-            if !searchOutput.relatedTopics.filter(({
-                $0.firstURL != nil
-            })).isEmpty {
-                var text = searchOutput.relatedTopics[row].text ?? "What?"
-                text = text.replacing(/<a[^>]+>/, with: "")
-                text = text.replacing(/<.*/, with: "")
-                return text
+            if areThereResults {
+                return relatedTopics[row].result?.replacing(/<a[^>]+>/, with: "").replacing(/<.+/, with: "") ?? "No result"
             }
             else {
-                return searchOutput.relatedTopics.filter({
-                    $0.name != nil
-                })[row].name ?? "No name"
+                return additionalTopics[row].name ?? "No text available"
             }
         default:
-            return "Should not reach here"
+            return "You Messed Up"
+            
+        }
+    }
+    
+    private func setBooleanMarkers() {
+        if results.isEmpty {
+            areThereResults = false
+        }
+        else {
+            areThereResults = true
+        }
+        if relatedTopics.isEmpty {
+            areThereRelatedTopics = false
+        }
+        else {
+            areThereRelatedTopics = true
+        }
+        if additionalTopics.isEmpty {
+            areThereAdditionalTopics = false
+        }
+        else {
+            areThereAdditionalTopics = true
         }
     }
     
@@ -98,12 +117,14 @@ class SearchViewModel {
             print("Nil ouput returned")
             abort()
         }
-        searchOutput = output
-        
-    }
-    
-    func getSearchOutput() -> Output {
-        return searchOutput
+        results = output.results
+        relatedTopics = output.relatedTopics.filter(({
+            $0.firstURL != nil
+        }))
+        additionalTopics = output.relatedTopics.filter(({
+            $0.firstURL == nil
+        }))
+        setBooleanMarkers()
     }
     
     func getNumberOfRowsInSection(section: Int) -> Int {
@@ -113,77 +134,73 @@ class SearchViewModel {
     func getSearchResults(fromCategory: Int) -> [SearchResult] {
         switch fromCategory {
         case 0:
-            return !searchOutput.results.isEmpty ? searchOutput.results : searchOutput.relatedTopics.filter(({
-                $0.firstURL != nil
-            }))
+            return areThereResults ? results : relatedTopics
         case 1:
-            return !searchOutput.results.isEmpty ? searchOutput.relatedTopics.filter(({
-                $0.firstURL != nil
-            })) : searchOutput.relatedTopics.filter(({
-                $0.firstURL == nil
-            }))
+            return areThereResults ? relatedTopics : additionalTopics
         default:
-            return searchOutput.relatedTopics
+            return additionalTopics
         }
     }
     
     func setNumberOfSections() -> Int {
         var count = 0
-        if !(searchOutput.results.isEmpty) {
+        if !results.isEmpty {
             count += 1
         }
-        if !(searchOutput.relatedTopics.filter(({
-            $0.firstURL != nil
-        })).isEmpty){
+        if !relatedTopics.isEmpty {
             count += 1
         }
-        if !(searchOutput.relatedTopics.filter(({
-            $0.firstURL == nil
-        })).isEmpty){
+        if !additionalTopics.isEmpty {
             count += 1
         }
-        self.count = count
+        if (count == 3){
+            print("Something went wrong . . .")
+            abort()
+        }
         return count
     }
     
-    func getSectionTitle(forSection section: Int) -> String {
-        if count == 0 {
-            abort()
-        }
-        if count == 1 {
-            if searchOutput.results.isEmpty {
-                if searchOutput.relatedTopics.filter(({$0.firstURL != nil })).isEmpty {
-                    return "Additional Topics"
-                }
-                else {
-                    return "Related Topics"
-                }
+    func getSearchResult(at indexPath: IndexPath) -> SearchResult {
+        switch indexPath.section {
+        case 0:
+            if areThereResults{
+                return results[indexPath.row]
             }
             else {
+                return relatedTopics[indexPath.row]
+            }
+        case 1:
+            if areThereResults {
+                return relatedTopics[indexPath.row]
+            }
+            else {
+                return additionalTopics[indexPath.row]
+            }
+        default:
+            return additionalTopics[indexPath.row]
+        }
+    }
+    
+    func getSectionTitle(forSection section: Int) -> String {
+        switch section {
+        case 0:
+            if areThereResults {
                 return "Results"
             }
-        }
-        else if count == 2 {
-            if section == 0 {
-                if searchOutput.results.isEmpty {
-                    return "Related Topics"
-                }
-                else {
-                    return "Results"
-                }
+            else {
+                return "Related Topics"
+            }
+        case 1:
+            if areThereResults {
+                return "Related Topics"
             }
             else {
-                if searchOutput.relatedTopics.filter(({
-                    $0.firstURL != nil
-                })).isEmpty {
-                    return "Related Topics"
-                }
-                else {
-                    return "Additional Topics"
-                }
+                return "Additional Topics"
             }
+        default:
+            return "Additional Topics"
         }
-        abort()
+        
     }
     
 }
