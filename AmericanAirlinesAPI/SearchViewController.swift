@@ -8,29 +8,6 @@
 import Foundation
 import UIKit
 
-struct SearchResult: Decodable {
-    let firstURL: String?
-    let result: String?
-    let text: String?
-    let name: String?
-    let topics: [SearchResult]?
-    enum CodingKeys: String, CodingKey {
-        case firstURL = "FirstURL"
-        case result = "Result"
-        case text = "Text"
-        case name = "Name"
-        case topics = "Topics"
-    }
-}
-
-struct Output: Decodable {
-    var relatedTopics: [SearchResult]
-    let results: [SearchResult]
-    enum CodingKeys: String, CodingKey {
-        case relatedTopics = "RelatedTopics"
-        case results = "Results"
-    }
-}
 
 // FirstUrl and Text or Name and Topics
 // Base Url/path/httpRequest/?key=param&key2=param2
@@ -44,14 +21,16 @@ struct Output: Decodable {
 // Update PUT
 // Delete DELETE
 
+protocol SearchViewDelegate: AnyObject {
+    func didSelectRow(at indexPath: IndexPath)
+}
+
 class SearchViewController: UIViewController, UITableViewDataSource {
 
     @IBOutlet weak var apiTable: UITableView!
     @IBOutlet weak var apiSearchBar: UISearchBar!
     @IBOutlet weak var userInputSearchLabel: UILabel!
-    private var searchApi: ServiceAPI?
-    private var searchOutput: Output = Output(relatedTopics: [], results: [])
-    private var offset = 0
+    private var searchViewModel: SearchViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,64 +40,30 @@ class SearchViewController: UIViewController, UITableViewDataSource {
         apiTable.delegate = self
         userInputSearchLabel.text = ""
         apiSearchBar.placeholder = "Search on 🦆🦆▶️"
-        searchApi = ServiceManager()
+        apiSearchBar.delegate = self
+        searchViewModel = SearchViewModel()
+        searchViewModel?.delegate = self
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        if searchOutput.relatedTopics.isEmpty && searchOutput.results.isEmpty {
-            return 0
-        }
-        return 3
+        return searchViewModel?.setNumberOfSections() ?? 0
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
         -> Int
     {
-
-        switch section {
-        case 0:
-            return searchOutput.results.count
-        case 1:
-            var linkedRelatedTopicsCount = 0
-            for topic in searchOutput.relatedTopics {
-                if topic.firstURL != nil {
-                    linkedRelatedTopicsCount += 1
-                } else {
-                    break
-                }
-            }
-            offset = linkedRelatedTopicsCount
-            return linkedRelatedTopicsCount
-        default:
-            var moreTopics = 0
-            for topic in searchOutput.relatedTopics {
-                if topic.firstURL != nil {
-                    continue
-                }
-                moreTopics += 1
-            }
-            return moreTopics
-        }
-
+        return searchViewModel?.getNumberOfRowsInSection(section: section) ?? 0
     }
 
     func tableView(
         _ tableView: UITableView,
         titleForHeaderInSection section: Int
     ) -> String? {
-        switch section {
-        case 0:
-            return "Results"
-        case 1:
-            return "Related Topics"
-        default:
-            return "Additional Topics"
-        }
+        return searchViewModel?.getSectionTitle(forSection: section) ?? " Out of Bounds"
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
-        -> UITableViewCell
-    {
+        -> UITableViewCell {
         guard
             let cell =
                 tableView.dequeueReusableCell(
@@ -129,92 +74,84 @@ class SearchViewController: UIViewController, UITableViewDataSource {
             print("Casting failed")
             abort()
         }
-
-        switch indexPath.section {
-
-        case 0:
-            cell.linkLabel.text = searchOutput.results[indexPath.row].firstURL
-            cell.descriptionLabel.text =
-                searchOutput.results[indexPath.row].text
-            break
-            
-        case 1:
-            var relatedText =
-                searchOutput.relatedTopics[indexPath.row].result ?? ""
-            relatedText = relatedText.replacing(/<a[^>]+>/, with: "")
-            relatedText = relatedText.replacing(/<.*/, with: "")
-            cell.descriptionLabel.text = relatedText
-            cell.linkLabel.text =
-                searchOutput.relatedTopics[indexPath.row].firstURL
-            break
-            
-        default:
-            let correctIndex = indexPath.row + offset
-            guard
-                let redirectText = searchOutput.relatedTopics[correctIndex].name
-            else {
-                print("You messed up somewhere")
-                abort()
-            }
-            cell.descriptionLabel.text = redirectText
-            cell.linkLabel.text = ""
-            
-        }
+        cell.descriptionLabel.text = searchViewModel?.getDescriptionLabel(section: indexPath.section, row: indexPath.row)
+        cell.linkLabel.text = searchViewModel?.getLinkText(section: indexPath.section, row: indexPath.row)
         return cell
     }
 
-    func performApiQuery(searchTerm: String) {
-        if searchTerm.isEmpty {
-            return
-        }
-        //let endpoint =
-        //    "https://api.duckduckgo.com/?q="
-        //    + searchTerm.replacing(/\s+/, with: "+") + "&format=json"
-//        searchApi?.execute(request: SearchRequest.createRequest(text: searchTerm.replacing(/\s+/, with: "+")), modelName: Output.self)
-//        { result in
-//            do {
-//                self.searchOutput = try result.get()
-//            } catch {
-//                print("Error: \(error)")
-//            }
+//    func performApiQuery(searchTerm: String) {
 //
-//            DispatchQueue.main.async {
-//                self.apiTable.reloadData()
-//                self.userInputSearchLabel.text = "Results for \"\(searchTerm)\""
-//            }
-//        }
-        // prepare query
-        let query = searchTerm.replacing(/\s+/, with: "+")
-        Task {
-            do {
-                guard let output = try await searchApi?.execute(request: SearchRequest.createRequest(text: query), modelName: Output.self) else {
-                    print("Nil ouput returned")
-                    abort()
-                }
-                searchOutput = output
-                DispatchQueue.main.async {
-                    self.apiTable.reloadData()
-                }
-            }
-            catch {
-                print("Error: \(error)")
-                abort()
-            }
-        }
-        
-    }
+//        
+//    }
 
 }
 
 extension SearchViewController: UISearchBarDelegate {
 
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let input = apiSearchBar.text else {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)  {
+        apiSearchBar.resignFirstResponder()
+        guard let input = apiSearchBar.text
+        else {
             return
         }
-        performApiQuery(searchTerm: input)
+        Task{
+            await searchViewModel?.querySearch(userInput: input)
+            apiTable.reloadData()
+        }
     }
 
+}
+
+extension SearchViewController: SearchViewDelegate {
+    func didSelectRow(at indexPath: IndexPath) {
+        let output = searchViewModel?.getSearchOutput()
+        switch indexPath.section {
+           case 0:
+               guard
+                   let url = URL(
+                    string: output?.results[indexPath.row].firstURL ?? ""
+                   )
+               else {
+                   print(
+                    "Failed to open \(output?.results[indexPath.row].firstURL ?? "no link")"
+                   )
+                   break
+               }
+               UIApplication.shared.open(url)
+               break
+           case 1:
+               guard
+                   let url = URL(
+                    string: output?.relatedTopics[indexPath.row].firstURL
+                           ?? ""
+                   )
+               else {
+                   print(
+                    "Failed to open \(output?.relatedTopics[indexPath.row].firstURL ?? "no link")"
+                   )
+                   break
+               }
+               UIApplication.shared.open(url)
+               break
+           default:
+               let sb = UIStoryboard(name: "Main", bundle: nil)
+               guard
+                   let vc = sb.instantiateViewController(
+                       withIdentifier: "SearchDetailsViewController"
+                   )
+                       as? SearchDetailsViewController
+               else {
+                   return
+               }
+               vc.additionalDetails =
+            output?.relatedTopics.filter(({
+                $0.firstURL == nil
+            }))[indexPath.row].topics ?? []
+               self.navigationController?.pushViewController(vc, animated: true)
+           }
+    }
+    
+    
 }
 
 extension SearchViewController: UITableViewDelegate {
@@ -222,48 +159,10 @@ extension SearchViewController: UITableViewDelegate {
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
     ) {
-        switch indexPath.section {
-        case 0:
-            guard
-                let url = URL(
-                    string: searchOutput.results[indexPath.row].firstURL ?? ""
-                )
-            else {
-                print(
-                    "Failed to open \(searchOutput.results[indexPath.row].firstURL ?? "no link")"
-                )
-                break
-            }
-            UIApplication.shared.open(url)
-            break
-        case 1:
-            guard
-                let url = URL(
-                    string: searchOutput.relatedTopics[indexPath.row].firstURL
-                        ?? ""
-                )
-            else {
-                print(
-                    "Failed to open \(searchOutput.relatedTopics[indexPath.row].firstURL ?? "no link")"
-                )
-                break
-            }
-            UIApplication.shared.open(url)
-            break
-        default:
-            let sb = UIStoryboard(name: "Main", bundle: nil)
-            guard
-                let vc = sb.instantiateViewController(
-                    withIdentifier: "SearchDetailsViewController"
-                )
-                    as? SearchDetailsViewController
-            else {
-                return
-            }
-            vc.additionalDetails =
-                searchOutput.relatedTopics[offset + indexPath.row].topics ?? []
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        // find indexPath.section
+//
     }
 
 }
+
+
