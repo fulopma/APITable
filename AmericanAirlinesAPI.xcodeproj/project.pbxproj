@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
@@ -63,24 +63,18 @@
 /* Begin PBXFrameworksBuildPhase section */
 		3F6A7DDB2DBFFFA600351DF2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3F6A7DF12DBFFFA700351DF2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3F6A7DFB2DBFFFA700351DF2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -118,14 +112,10 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			fileSystemSynchronizedGroups = (
 				3F6A7DE02DBFFFA600351DF2 /* AmericanAirlinesAPI */,
 			);
 			name = AmericanAirlinesAPI;
-			packageProductDependencies = (
-			);
 			productName = AmericanAirlinesAPI;
 			productReference = 3F6A7DDE2DBFFFA600351DF2 /* AmericanAirlinesAPI.app */;
 			productType = "com.apple.product-type.application";
@@ -147,8 +137,6 @@
 				3F6A7DF72DBFFFA700351DF2 /* AmericanAirlinesAPITests */,
 			);
 			name = AmericanAirlinesAPITests;
-			packageProductDependencies = (
-			);
 			productName = AmericanAirlinesAPITests;
 			productReference = 3F6A7DF42DBFFFA700351DF2 /* AmericanAirlinesAPITests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -170,8 +158,6 @@
 				3F6A7E012DBFFFA700351DF2 /* AmericanAirlinesAPIUITests */,
 			);
 			name = AmericanAirlinesAPIUITests;
-			packageProductDependencies = (
-			);
 			productName = AmericanAirlinesAPIUITests;
 			productReference = 3F6A7DFE2DBFFFA700351DF2 /* AmericanAirlinesAPIUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -208,7 +194,7 @@
 			);
 			mainGroup = 3F6A7DD52DBFFFA600351DF2;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
+			preferredProjectObjectVersion = 90;
 			productRefGroup = 3F6A7DDF2DBFFFA600351DF2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -223,48 +209,36 @@
 /* Begin PBXResourcesBuildPhase section */
 		3F6A7DDC2DBFFFA600351DF2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3F6A7DF22DBFFFA700351DF2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3F6A7DFC2DBFFFA700351DF2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3F6A7DDA2DBFFFA600351DF2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3F6A7DF02DBFFFA700351DF2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3F6A7DFA2DBFFFA700351DF2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -282,7 +256,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		3F6A7E082DBFFFA700351DF2 /* Debug */ = {
+		3F6A7E082DBFFFA700351DF2 /* Debug configuration for PBXNativeTarget "AmericanAirlinesAPI" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -296,6 +270,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -309,7 +284,7 @@
 			};
 			name = Debug;
 		};
-		3F6A7E092DBFFFA700351DF2 /* Release */ = {
+		3F6A7E092DBFFFA700351DF2 /* Release configuration for PBXNativeTarget "AmericanAirlinesAPI" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -323,6 +298,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -336,7 +312,7 @@
 			};
 			name = Release;
 		};
-		3F6A7E0A2DBFFFA700351DF2 /* Debug */ = {
+		3F6A7E0A2DBFFFA700351DF2 /* Debug configuration for PBXProject "AmericanAirlinesAPI" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -399,7 +375,7 @@
 			};
 			name = Debug;
 		};
-		3F6A7E0B2DBFFFA700351DF2 /* Release */ = {
+		3F6A7E0B2DBFFFA700351DF2 /* Release configuration for PBXProject "AmericanAirlinesAPI" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -455,7 +431,7 @@
 			};
 			name = Release;
 		};
-		3F6A7E0D2DBFFFA700351DF2 /* Debug */ = {
+		3F6A7E0D2DBFFFA700351DF2 /* Debug configuration for PBXNativeTarget "AmericanAirlinesAPITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -473,7 +449,7 @@
 			};
 			name = Debug;
 		};
-		3F6A7E0E2DBFFFA700351DF2 /* Release */ = {
+		3F6A7E0E2DBFFFA700351DF2 /* Release configuration for PBXNativeTarget "AmericanAirlinesAPITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -491,7 +467,7 @@
 			};
 			name = Release;
 		};
-		3F6A7E102DBFFFA700351DF2 /* Debug */ = {
+		3F6A7E102DBFFFA700351DF2 /* Debug configuration for PBXNativeTarget "AmericanAirlinesAPIUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -507,7 +483,7 @@
 			};
 			name = Debug;
 		};
-		3F6A7E112DBFFFA700351DF2 /* Release */ = {
+		3F6A7E112DBFFFA700351DF2 /* Release configuration for PBXNativeTarget "AmericanAirlinesAPIUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -529,37 +505,33 @@
 		3F6A7DD92DBFFFA600351DF2 /* Build configuration list for PBXProject "AmericanAirlinesAPI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3F6A7E0A2DBFFFA700351DF2 /* Debug */,
-				3F6A7E0B2DBFFFA700351DF2 /* Release */,
+				3F6A7E0A2DBFFFA700351DF2 /* Debug configuration for PBXProject "AmericanAirlinesAPI" */,
+				3F6A7E0B2DBFFFA700351DF2 /* Release configuration for PBXProject "AmericanAirlinesAPI" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		3F6A7E072DBFFFA700351DF2 /* Build configuration list for PBXNativeTarget "AmericanAirlinesAPI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3F6A7E082DBFFFA700351DF2 /* Debug */,
-				3F6A7E092DBFFFA700351DF2 /* Release */,
+				3F6A7E082DBFFFA700351DF2 /* Debug configuration for PBXNativeTarget "AmericanAirlinesAPI" */,
+				3F6A7E092DBFFFA700351DF2 /* Release configuration for PBXNativeTarget "AmericanAirlinesAPI" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		3F6A7E0C2DBFFFA700351DF2 /* Build configuration list for PBXNativeTarget "AmericanAirlinesAPITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3F6A7E0D2DBFFFA700351DF2 /* Debug */,
-				3F6A7E0E2DBFFFA700351DF2 /* Release */,
+				3F6A7E0D2DBFFFA700351DF2 /* Debug configuration for PBXNativeTarget "AmericanAirlinesAPITests" */,
+				3F6A7E0E2DBFFFA700351DF2 /* Release configuration for PBXNativeTarget "AmericanAirlinesAPITests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		3F6A7E0F2DBFFFA700351DF2 /* Build configuration list for PBXNativeTarget "AmericanAirlinesAPIUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3F6A7E102DBFFFA700351DF2 /* Debug */,
-				3F6A7E112DBFFFA700351DF2 /* Release */,
+				3F6A7E102DBFFFA700351DF2 /* Debug configuration for PBXNativeTarget "AmericanAirlinesAPIUITests" */,
+				3F6A7E112DBFFFA700351DF2 /* Release configuration for PBXNativeTarget "AmericanAirlinesAPIUITests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
